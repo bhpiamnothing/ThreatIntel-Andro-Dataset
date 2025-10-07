@@ -289,27 +289,27 @@ def run_train(
         # CORRECT ORDER STEP 3: Create the final train/test arrays using the finalized indices.
         # X_train_csr, y_train = X_csr[train_idx], y_all[train_idx]
         # X_test_csr, y_test = X_csr[test_idx], y_all[test_idx]
-        # 加载原始标签（用于测试集）
-        labels_df_orig = pd.read_csv(labels_csv)  # 包含 sha256 和 family
+        # Load original labels (for the test set)
+        labels_df_orig = pd.read_csv(labels_csv)  # Contains sha256 and family
 
-        # 加载训练集标签（来自 Kaspersky）
+        # Load training set labels (from Kaspersky)
         train_labels_df = pd.read_csv("mydataset_kaspersky_results_1_aligned_mapped.csv")  # sha256, family
 
-        # 创建原始标签映射（用于测试集）
+        # Create original label mapping (for test set)
         sha256_to_label_orig = labels_df_orig.set_index("sha256")["family"].to_dict()
 
-        # 创建训练集标签映射（来自 Kaspersky）
+        # Create training set label mapping (from Kaspersky)
         sha256_to_label_train = train_labels_df.set_index("sha256")["family"].to_dict()
 
-        # 获取训练集和测试集的 sha256
+        # Get training and testing set sha256
         train_sha256 = labels_df_orig.iloc[train_idx]["sha256"].values
         test_sha256 = labels_df_orig.iloc[test_idx]["sha256"].values
 
-        # 替换训练集标签（来自 Kaspersky）
+        # Replace training set labels (from Kaspersky)
         y_train = np.array([sha256_to_label_train.get(s, sha256_to_label_orig[s]) for s in train_sha256])
         y_test = np.array([sha256_to_label_orig[s] for s in test_sha256])
 
-        # 重新编码标签（确保一致性）
+        # Re-encode labels (to ensure consistency)
         all_labels = np.concatenate([y_train, y_test])
         le = LabelEncoder()
         le.fit(all_labels)
@@ -318,18 +318,18 @@ def run_train(
         num_classes = len(le.classes_)
 
 
-        # 提取特征
+        # Extract features
         X_train_csr = X_csr[train_idx]
         X_test_csr = X_csr[test_idx]
 
-        # ---------- 过滤训练集中样本数 < 2 的类 ----------
+        # ---------- Filter classes with less than 2 samples in training set ----------
         from collections import Counter
-        cls_cnt = Counter(y_train)  # 统计每个类有多少样本
+        cls_cnt = Counter(y_train)  # Count the number of samples for each class
         keep_cls = [c for c, n in cls_cnt.items() if n >= 2]
-        mask = np.isin(y_train, keep_cls)  # 保留样本 mask
-        train_idx = train_idx[mask]  # 同步裁剪索引
-        y_train = y_train[mask]  # 同步裁剪标签
-        X_train_csr = X_train_csr[mask]  # 同步裁剪特征
+        mask = np.isin(y_train, keep_cls)  # Keep sample mask
+        train_idx = train_idx[mask]  # Synchronize trimming indices
+        y_train = y_train[mask]  # Synchronize trimming labels
+        X_train_csr = X_train_csr[mask]  # Synchronize trimming features
         print(f"[*] Filtered train: {len(y_train)} samples, {len(keep_cls)} classes")
         # --------------------------------------------------
 
