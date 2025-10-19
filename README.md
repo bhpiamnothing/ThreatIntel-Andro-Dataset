@@ -1,11 +1,27 @@
 # ThreatIntel-Andro: Expert-Verified Benchmarking for Robust Android Malware Research
 
 ## Overview
-This repository accompanies the research paper *"Your Dataset May Not Be Reliable: Expert-Verified Benchmarking for Robust Android Malware Research"*. We present **ThreatIntel-Andro**, an Android malware dataset grounded in real-world security industry expertise.
+This repository accompanies the research paper *"hreatIntel-Andro: Expert-Verified Benchmarking for Robust Android Malware Research"*. We present **ThreatIntel-Andro**, an Android malware dataset grounded in real-world security industry expertise.
 
 ThreatIntel-Andro is constructed by systematically collecting and analyzing professional threat reports published by leading cybersecurity vendors since 2016. From these reports, we extract **expert-validated indicators of compromise (IoCs)**—primarily file hashes and their associated malware family attributions. The final dataset comprises **5,123 malware samples** spanning **146 distinct malware families**.
 
 All samples are retrieved from the [Koodous](https://koodous.com/) repository and temporally anchored using key metadata such as first submission dates, ensuring both timeliness and long-term research value.
+
+### Long-Term Maintenance and Open Collaboration  
+ThreatIntel-Andro is designed as a **long-term, openly maintained dataset** for the Android security research community. In future work, we plan to continuously expand the dataset with newly reported malware samples and refine family annotations based on evolving threat landscapes. We welcome **feedback and suggestions** from researchers in the field of Android malware detection to help improve the quality, coverage, and usability of the dataset.
+
+### Request Access to the Dataset  
+Due to legal and ethical considerations regarding malware distribution, full access to the ThreatIntel-Andro dataset is granted on a **research-purpose basis**.  
+
+If you would like to access the dataset, please send an email to: **[bai931214@tju.edu.cn](mailto:bai931214@tju.edu.cn)**  
+
+To ensure responsible usage, all requests will be **manually reviewed**. Please include the following information in your email:  
+- The intended **purpose** of using the dataset  
+- Your background in **Android security or malware research** (if applicable)  
+- A link to your **recent publications**, **Google Scholar profile**, or personal research webpage  
+- If you are a student, please include a link to your **advisor’s academic profile**  
+
+We appreciate your cooperation and look forward to fostering collaborative, ethical research in the Android security community.
 
 ---
 
